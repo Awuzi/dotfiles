@@ -1,0 +1,3 @@
+<templateSet group="HTML/XML">
+  <template name="php1" value="&lt;?php ?&gt;" description="phpp" toReformat="false" toShortenFQNames="true" />
+</templateSet>
