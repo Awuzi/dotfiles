@@ -17,9 +17,8 @@
 ;==========================================================
 
 [colors]
-background = #222
-background-alt = #1F223D
-;foreground = ${xrdb:color7:#222}
+background = #444267
+background-alt = #444267
 foreground = #dfdfdf
 foreground-alt = #555
 primary = #ffb52a
@@ -27,22 +26,20 @@ secondary = #e60053
 alert = #bd2c40
 
 [bar/default]
-;monitor = ${env:MONITOR:HDMI-1}
-width = 100%
-height = 27
-;offset-x = 1%
-;offset-y = 1%
-radius = 0.0
+;monitor = ${env:MONITOR:HDMI-2}
+height = 32
+offset-y = 0
+top = true
 fixed-center = true
 
-background = #364953
+background =  ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
+line-size = 2
 line-color = #f00
 
-border-size = 1
-border-color =${colors.background}
+border-size = 0
+border-color = ${colors.background}
 
 padding-left = 0
 padding-right = 2
@@ -52,15 +49,15 @@ module-margin-left = 1
 
 module-margin-right = 2
 
-font-0 = System San Francisco Display:size=10;2
-font-1 = FontAwesome:size=12;3
+font-0 = System San Francisco Display:size=9;2
+font-1 = FontAwesome:size=13;3
 font-2 = MaterialIcons:size=11;4
 
 
 
 modules-left = i3
 modules-center = xwindow
-modules-right = alsa backlight-acpi battery date powermenu
+modules-right = alsa backlight-acpi battery temperature date powermenu
 
 tray-position = right
 tray-padding = 5
@@ -82,7 +79,7 @@ cursor-scroll = ns-resize
 
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:50:...%
+label = %title:0:100:...%
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -148,7 +145,7 @@ label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
 label-focused = %index% %icon%
-label-focused-background = ${colors.background-alt}
+label-focused-background = #444267
 label-focused-underline= #EBCB8B
 label-focused-padding = 2
 
@@ -168,13 +165,18 @@ label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
 
 ; Separator in between workspaces
-; label-separator = |
+;label-separator = |
 
 
-ws-icon-0=1;
-ws-icon-1=2;
-ws-icon-2=3;
-ws-icon-3=4;
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
 
 
 [module/mpd]
@@ -193,7 +195,7 @@ label-song-ellipsis = true
 [module/xbacklight]
 type = internal/xbacklight
 format = <label> <bar>
-label = LUM
+label = 
 bar-width = 10
 bar-indicator = |
 bar-indicator-foreground = #fff
@@ -204,6 +206,7 @@ bar-fill-foreground = #9f78e1
 bar-empty = ─
 bar-empty-font = 2
 bar-empty-foreground = ${colors.foreground-alt}
+
 
 [module/backlight-acpi]
 inherit = module/xbacklight
@@ -268,30 +271,22 @@ format-disconnected =
 [module/date]
 type = internal/date
 interval = 5
-
-date =
+date =  
 date-alt = " %d-%m-%Y"
-
 time = %H:%M
 time-alt = %H:%M
-
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = 
-
 label = %date% %time%
 
 [module/pulseaudio]
 type = internal/pulseaudio
-
 ; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
 ; If not, uses default sink
 sink = alsa_output.pci-0000_12_00.3.analog-stereo
-
 ; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
 ; Default: true
 use-ui-max = true
-
 ; Interval for volume increase/decrease (in percent points)
 ; Default: 5
 interval = 5
@@ -335,13 +330,13 @@ format-volume = <label-volume> <bar-volume>
 label-volume = %percentage%%
 label-volume-foreground = ${root.foreground}
 
-format-muted-prefix = " "
-format-muted-foreground = ${colors.foreground-alt}
-label-muted = sound muted
+format-muted-prefix = " "
+format-muted-foreground =#ffffff
+label-muted = muted
 
 bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-0 = #ffffff
+bar-volume-foreground-1 = #eaeaea
 bar-volume-foreground-2 = #55aa55
 bar-volume-foreground-3 = #55aa55
 bar-volume-foreground-4 = #55aa55
@@ -363,31 +358,38 @@ adapter = AC0
 full-at = 100
 
 format-charging = <animation-charging> <label-charging>
-format-charging-underline = 
+label-charging = %percentage%%
+format-charging-foreground = ${colors.background-alt}
+format-charging-background = background-alt
 
-format-discharging = <animation-discharging> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
 
-format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = ${self.format-charging-underline}
+format-discharging = <ramp-capacity> <label-discharging>
+label-discharging = %percentage%%
+format-discharging-foreground = ${colors.background-alt}
+format-discharging-background = background-alt
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
+format-full-prefix = " "
+format-full-prefix-foreground = #a3c725
+format-foreground = ${colors.background-alt}
+format-background = background-alt
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-foreground = #c7ae25
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-foreground = #a3c725
 animation-charging-framerate = 750
 
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
-animation-discharging-foreground = ${colors.foreground-alt}
-animation-discharging-framerate = 750
+################################################################################
+
 
 [module/temperature]
 type = internal/temperature
@@ -395,14 +397,13 @@ thermal-zone = 0
 warn-temperature = 60
 
 format = <ramp> <label>
-format-underline = #f50a4d
+format-underline =
 format-warn = <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
 
-label = %temperature-c%
+label = %temperature-c% 
 label-warn = %temperature-c%
 label-warn-foreground = ${colors.secondary}
-
 ramp-0 = 
 ramp-1 = 
 ramp-2 = 
@@ -422,20 +423,21 @@ label-close-foreground =
 label-separator = |
 label-separator-foreground = ${colors.foreground-alt}
 
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
+menu-0-0 = 
+menu-0-0-exec = i3lock -i /home/awuzi/Images/wallpaper.png
+menu-0-1 = 
 menu-0-1-exec = shutdown now
 
 menu-1-0 = cancel
 menu-1-0-exec = menu-open-0
 menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
+menu-1-1-exec = i3lock
 
 menu-2-0 = power off
 menu-2-0-exec = sudo poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
+
 
 [settings]
 screenchange-reload = true
